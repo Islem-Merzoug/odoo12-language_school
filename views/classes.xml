@@ -1,0 +1,173 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="language_school.class_form">
+            <field name="name">Class form</field>
+            <field name="model">language_school.class</field>
+            <field name="arch" type="xml">
+                <form string="Classes">
+                    <header>
+                        <button name="add_lessons" string="ADD LESSONS" type="object" states="draft"
+                                class="oe_highlight"/>
+
+                        <button name="set_to_started" string="START" states="draft" type="object" class="oe_highlight"/>
+
+                        <button name="set_to_draft" string="SET TO DRAFT" states="started" type="object"/>
+
+                        <button name="set_to_completed" string="SET TO COMPLETED" states="started" type="object"
+                                class="oe_highlight"/>
+
+                        <button name="set_to_canceled" string="CANCEL" states="started,draft" type="object"
+                                class="oe_highlight"/>
+
+                        <button string="CREATE INVOICE" states="draft" type="object"
+                                class="oe_highlight"/>
+
+                        <field name="state"
+                               widget="statusbar"
+                               statusbar_visible="draft,started,completed,canceled"
+                               statusbar_colors='{"draft":"blue","started":"green"}'/>
+
+                    </header>
+                    <sheet string="Class">
+                        <h1>
+                            <div>
+                                <label for="name"/>
+                                <br/>
+                                <field name="name" class="oe_inline"/>
+                            </div>
+                        </h1>
+                        <group>
+                            <group column="2">
+                                <field name="date_start"/>
+                                <field name="date_end"/>
+                                <field name="service_id"/>
+
+                            </group>
+                            <group>
+                                <field name="student_idss" widget="many2many_tags"/>
+                                <field name="teacher_id"/>
+                                <field name="localisation"/>
+                                <field name="availisable_space"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="repeat"/>
+                        </group>
+                        <group attrs="{'invisible': [('repeat', '!=', 'weekly')]}">
+                            <group>
+                                <field name="sunday"/>
+                                <field name="monday"/>
+                                <field name="tuesday"/>
+                                <field name="wednesday"/>
+                            </group>
+                            <group>
+                                <field name="thursday"/>
+                                <field name="friday"/>
+                                <field name="saturday"/>
+                            </group>
+                        </group>
+                        <label for="lesson_ids"/>
+                        <field name="lesson_ids" wiget="one2many_list">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="date_start"/>
+                                <field name="date_end"/>
+                                <field name="state"/>
+                            </tree>
+                        </field>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="language_school.class_list">
+            <field name="name">Classes list</field>
+            <field name="model">language_school.class</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="partner_kanban_view" model="ir.ui.view">
+            <field name="name">Classes kanban</field>
+            <field name="model">language_school.class</field>
+            <field name="arch" type="xml">
+                <kanban class="o_res_partner_kanban">
+                    <field name="name"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="teacher_id"/>
+                    <field name="localisation"/>
+                    <field name="nbr_lessons"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <!--                                <div class="o_kanban_image">-->
+                                <!--                                    <img alt="Avatar"-->
+                                <!--                                         t-att-src="kanban_image('res.partners', 'image_medium',record.id.raw_value)"/>-->
+                                <!--                                </div>-->
+                                <div style="float: left; width: 60%;">
+                                    <div class="oe_kanban_details">
+                                        <strong class="o_kanban_record_title"
+                                                style="color: #048B9A; font-size: 15px; font-family: Arial;">
+                                            <field name="name"/>
+                                        </strong>
+                                        <div t-if="record.date_start.value">
+                                            <t t-esc="record.date_start.value"/>
+                                        </div>
+                                        <div t-if="record.date_end.value">
+                                            <t t-esc="record.date_end.value"/>
+                                        </div>
+                                        <div t-if="record.teacher_id.value">
+                                            <field name="teacher_id"/>
+
+                                        </div>
+                                        <div t-if="record.localisation.value">
+                                            <field name="localisation"/>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div style="float: right; background-color: #048B9A; padding: 8px; font-family: Arial; font-size: 15px; height: 100%; width: 40%;">
+                                    <strong>
+                                        <div t-if="record.nbr_lessons.value">
+                                            <p style="text-align: center; color: #ffffff;">
+                                                <field name="nbr_lessons"/>
+                                                <br/>
+                                                Lessons
+                                            </p>
+                                        </div>
+                                    </strong>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="language_school.class_action_window">
+            <field name="name">Classes</field>
+            <field name="res_model">language_school.class</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+<!--        <menuitem name="Language School" id="language_school.menu_root"/>-->
+
+<!--        <menuitem name="Classes" id="language_school.class" parent="language_school.menu_root"/>-->
+<!--        <menuitem name="Class" id="language_school.class_list" parent="language_school.class"-->
+<!--                  action="language_school.class_action_window"/>-->
+
+    </data>
+</odoo>

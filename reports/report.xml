@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report
+            id="report_class_invoice"
+            string="Print class invoice"
+            model="language_school.class"
+            report_type="qweb-pdf"
+            name="language_school.report_class_invoice"
+            file="language_school.report_class_invoice"/>
+
+</odoo>

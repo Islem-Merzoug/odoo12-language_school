@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--Define view_form_article -->
+        <record id="language_school.service_form" model="ir.ui.view">
+            <field name="name">service Form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+
+                <field name="image_medium" position="before">
+                    <label for="is_service" string="Est une service ?"/>
+                    <field name="is_service"/>
+                </field>
+            </field>
+        </record>
+
+
+
+        <!--Define article_search -->
+        <record id="language_school.service_search" model="ir.ui.view">
+            <field name="name">Service Search</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='filter_to_sell']" position="after">
+                    <filter name="Service" string="Service" icon="terp-mail-message-new"
+                            domain="[('is_service','=',True)]"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <!--Define article_action -->
+        <record model="ir.actions.act_window" id="language_school.service_action_window">
+            <field name="name">Service</field>
+            <field name="res_model">product.template</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="language_school.service_search"/>
+            <field name="domain">[('is_service', '=', True)]</field>
+            <!-- Pour passer une valeur à un champ depuis le contexte if suffit de précéder le nom du champ par `default_`-->
+                <field name="context">{'is_service': True, 'default_type':'product','search_default_Service':1}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create new Service
+                </p>
+            </field>
+        </record>
+
+
+    </data>
+
+</odoo>
+

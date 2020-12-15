@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_language_school_class,language_school.language_school_class,model_language_school_class,,1,0,0,0
+access_language_school_student,language_school.language_school_student,model_language_school_student,,1,0,0,0
+access_language_school_lesson,language_school.language_school_lesson,model_language_school_lesson,,1,0,0,0
+
+admin_access_language_school_class,language_school.language_school_class,model_language_school_class,base.group_erp_manager,1,1,1,1
+admin_access_language_school_student,language_school.language_school_student,model_language_school_student,base.group_erp_manager,1,1,1,1
+admin_access_language_school_lesson,language_school.language_school_lesson,model_language_school_lesson,base.group_erp_manager,1,1,1,1
+admin_access_language_school_lesson_wizard,access_language_school_lesson_wizard,model_language_school_lesson_wizard,base.group_user,1,1,1,1

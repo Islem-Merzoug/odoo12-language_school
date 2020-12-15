@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <menuitem name="Language School" id="language_school.menu_root"/>
+
+        <menuitem name="Classes" id="language_school.class" parent="language_school.menu_root"/>
+        <menuitem name="Class" id="language_school.class_list" parent="language_school.class"
+                  action="language_school.class_action_window"/>
+
+        <menuitem name="Services" id="language_school.service" parent="language_school.menu_root"/>
+            <menuitem name="Service" id="language_school.service_list" parent="language_school.service"
+                  action="language_school.service_action_window"/>
+
+        <menuitem name="Lessons" id="language_school.lesson" parent="language_school.menu_root"/>
+            <menuitem name="Lesson" id="language_school.lesson_list" parent="language_school.lesson"
+                  action="language_school.lesson_action_window"/>
+    </data>
+</odoo>
